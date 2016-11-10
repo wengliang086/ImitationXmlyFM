@@ -138,8 +138,10 @@ public class FindRecommendAdapter extends BaseAdapter {
         Recommend.Hot datas = (Recommend.Hot) itemEntry.object;
         holder.txtTitle.setText(datas.title);
         for (int i = 0; i < 3; i++) {
-            holder.albumNames[i].setText(datas.list.get(i).trackTitle);
-            MyImageLoader.load(datas.list.get(i).albumCoverUrl290, holder.albumIcons[i]);
+            if (datas.list.size() > i) {
+                holder.albumNames[i].setText(datas.list.get(i).trackTitle);
+                MyImageLoader.load(datas.list.get(i).albumCoverUrl290, holder.albumIcons[i]);
+            }
         }
         return view;
     }
