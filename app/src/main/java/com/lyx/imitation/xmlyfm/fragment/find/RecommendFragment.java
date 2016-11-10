@@ -2,6 +2,7 @@ package com.lyx.imitation.xmlyfm.fragment.find;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.lyx.imitation.xmlyfm.R;
 import com.lyx.imitation.xmlyfm.adapter.find.FindRecommendAdapter;
+import com.lyx.imitation.xmlyfm.adapter.find.FindRecommendViewPagerAdapter;
 import com.lyx.imitation.xmlyfm.fragment.BaseFragment;
 import com.lyx.imitation.xmlyfm.model.Recommend;
 import com.lyx.imitation.xmlyfm.task.base.TaskCallback;
@@ -33,6 +35,7 @@ public class RecommendFragment extends BaseFragment implements TaskCallback {
     private ListView listView;
     private ProgressBar progressBar;
     private FindRecommendAdapter findRecommendAdapter;
+    private ViewPager headerViewPager, footerViewPager;
     // 填充数据
     private Recommend recommend;
 
@@ -55,10 +58,7 @@ public class RecommendFragment extends BaseFragment implements TaskCallback {
     }
 
     private void setDatas() {
-        String url = "http://mobile.ximalaya.com/mobile/" +
-                "discovery/v1/recommends?channel=yz-xm&device=androi" +
-                "d&includeActivity=true&includeSpecial=true&scale=2" +
-                "&version=4.3.20.14";
+        String url = "http://mobile.ximalaya.com/mobile/discovery/v1/recommends?channel=yz-xm&device=android&includeActivity=true&includeSpecial=true&scale=2&version=4.3.20.14";
         new HttpUtils().send(HttpRequest.HttpMethod.GET, url, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
@@ -69,6 +69,8 @@ public class RecommendFragment extends BaseFragment implements TaskCallback {
                 }
                 recommend = new Gson().fromJson(s, Recommend.class);
                 findRecommendAdapter.setRecommend(recommend);
+                // 轮播图片
+                headerViewPager.setAdapter(new FindRecommendViewPagerAdapter(getActivity(), recommend.focusImages.list));
             }
 
             @Override
@@ -86,6 +88,7 @@ public class RecommendFragment extends BaseFragment implements TaskCallback {
 
     private void addHeaderView() {
         View view = View.inflate(getActivity(), R.layout.fragment_find_recommend_header, null);
+        headerViewPager = (ViewPager) view.findViewById(R.id.id_recommend_head_viewPager);
         listView.addHeaderView(view);
     }
 
