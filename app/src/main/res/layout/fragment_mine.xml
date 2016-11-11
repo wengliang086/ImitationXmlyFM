@@ -17,7 +17,7 @@
             android:background="@mipmap/setting_normal" />
         <!--登陆的图标-->
         <ImageButton
-            android:id="@+id/frag_ib_register"
+            android:id="@+id/id_mine_register"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_centerHorizontal="true"
@@ -27,7 +27,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/frag_ib_register"
+            android:layout_below="@+id/id_mine_register"
             android:layout_centerHorizontal="true"
             android:text="登录"
             android:textColor="#ffff"
