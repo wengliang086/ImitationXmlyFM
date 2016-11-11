@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.lyx.imitation.xmlyfm.R;
-import com.lyx.imitation.xmlyfm.adapter.FindFragmentAdapter;
+import com.lyx.imitation.xmlyfm.adapter.TabLayoutFragmentPagerAdapter;
 import com.lyx.imitation.xmlyfm.fragment.find.AnchorFragment;
 import com.lyx.imitation.xmlyfm.fragment.find.BroadCastFragment;
 import com.lyx.imitation.xmlyfm.fragment.find.CategoryFragment;
@@ -50,7 +50,7 @@ public class FindFragment extends BaseFragment {
         fragments.add(new TopListFragment());
         fragments.add(new AnchorFragment());
         ViewPager viewPager = (ViewPager) baseView.findViewById(R.id.id_find_viewPager);
-        viewPager.setAdapter(new FindFragmentAdapter(getActivity().getSupportFragmentManager(), fragments, titles));
+        viewPager.setAdapter(new TabLayoutFragmentPagerAdapter(getActivity().getSupportFragmentManager(), fragments, titles));
         tabLayout.setupWithViewPager(viewPager);
     }
 }
