@@ -28,6 +28,7 @@ public class FindRecommendViewPagerAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         ImageView imageView = new ImageView(context);
+        position = position % list.size();
         MyImageLoader.load(list.get(position).pic, imageView);
         container.addView(imageView);
         return imageView;
@@ -40,7 +41,8 @@ public class FindRecommendViewPagerAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return list.size();
+//        return list.size();
+        return Integer.MAX_VALUE;
     }
 
     @Override

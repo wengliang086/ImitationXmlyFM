@@ -7,6 +7,8 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
@@ -24,6 +26,9 @@ import com.lyx.imitation.xmlyfm.model.Recommend;
 import com.lyx.imitation.xmlyfm.task.base.TaskCallback;
 import com.lyx.imitation.xmlyfm.task.base.TaskResult;
 import com.lyx.imitation.xmlyfm.util.T;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Administrator on 2016/11/8.
@@ -71,6 +76,7 @@ public class RecommendFragment extends BaseFragment implements TaskCallback {
                 findRecommendAdapter.setRecommend(recommend);
                 // 轮播图片
                 headerViewPager.setAdapter(new FindRecommendViewPagerAdapter(getActivity(), recommend.focusImages.list));
+                setVPDoc(recommend.focusImages.list);
             }
 
             @Override
@@ -89,7 +95,69 @@ public class RecommendFragment extends BaseFragment implements TaskCallback {
     private void addHeaderView() {
         View view = View.inflate(getActivity(), R.layout.fragment_find_recommend_header, null);
         headerViewPager = (ViewPager) view.findViewById(R.id.id_recommend_head_viewPager);
+        headerViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                swichDoc(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+        llDoc = (LinearLayout) view.findViewById(R.id.id_recommend_head_linearLayout);
         listView.addHeaderView(view);
+    }
+
+    //存放vp的小圆点
+    private List<ImageView> vpDoc = new ArrayList<>();
+    private LinearLayout llDoc;
+
+    /**
+     * 设置ViewPager小圆点
+     * @param list
+     */
+    private void setVPDoc(List<Recommend.News> list) {
+        vpDoc.clear();
+        for (Recommend.News n : list) {
+            ImageView ivDoc = new ImageView(getActivity());
+            llDoc.addView(ivDoc);
+            /*
+             * 1、通过控件获取到设置属性的params对象
+			 * 2、给params添加属性
+			 * 3、把设置好的属性对象交给我们的控件
+			 */
+            LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) ivDoc.getLayoutParams();
+            params.width = 10;
+            params.height = 10;
+            params.setMargins(0, 0, 15, 0);
+            ivDoc.setLayoutParams(params);
+            ivDoc.setImageResource(R.drawable.shap_docll);
+            vpDoc.add(ivDoc);
+        }
+        // 给小圆点设置一个初值颜色
+        vpDoc.get(0).setImageResource(R.drawable.shap_docll_end);
+    }
+
+    /**
+     * 根据position切换圆点的颜色
+     * @param position
+     */
+    private void swichDoc(int position) {
+        for (int i = 0; i < vpDoc.size(); i++) {
+            //找到position图片的位置，设置红色
+            if (position % vpDoc.size() == i) {
+                vpDoc.get(i).setImageResource(R.drawable.shap_docll_end);
+            } else {
+                vpDoc.get(i).setImageResource(R.drawable.shap_docll);
+            }
+        }
     }
 
     private void addFooterView() {

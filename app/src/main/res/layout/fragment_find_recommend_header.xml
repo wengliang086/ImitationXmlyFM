@@ -12,6 +12,7 @@
         android:id="@+id/id_recommend_head_linearLayout"
         android:layout_width="match_parent"
         android:layout_height="20dp"
+        android:gravity="center"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal" />
 </RelativeLayout>
