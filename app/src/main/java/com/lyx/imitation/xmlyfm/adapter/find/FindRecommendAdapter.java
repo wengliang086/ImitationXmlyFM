@@ -1,5 +1,6 @@
 package com.lyx.imitation.xmlyfm.adapter.find;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lyx.imitation.xmlyfm.R;
+import com.lyx.imitation.xmlyfm.activity.AlbumActivity;
 import com.lyx.imitation.xmlyfm.model.Recommend;
 import com.lyx.imitation.xmlyfm.util.MyImageLoader;
 
@@ -135,12 +137,20 @@ public class FindRecommendAdapter extends BaseAdapter {
             }
             view.setTag(holder);
         }
-        Recommend.Hot datas = (Recommend.Hot) itemEntry.object;
+        final Recommend.Hot datas = (Recommend.Hot) itemEntry.object;
         holder.txtTitle.setText(datas.title);
         for (int i = 0; i < 3; i++) {
             if (datas.list.size() > i) {
-                holder.albumNames[i].setText(datas.list.get(i).trackTitle);
-                MyImageLoader.load(datas.list.get(i).albumCoverUrl290, holder.albumIcons[i]);
+                final Recommend.Recommends recommends = datas.list.get(i);
+                holder.albumNames[i].setText(recommends.trackTitle);
+                MyImageLoader.load(recommends.albumCoverUrl290, holder.albumIcons[i]);
+                // 添加监听事件
+                holder.albumIcons[i].setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        AlbumActivity.startActivity((Activity) context, recommends.albumId, recommends.title, 0);
+                    }
+                });
             }
         }
         return view;

@@ -22,6 +22,8 @@
         </activity>
         <activity android:name=".activity.WelcomeWebActivity" />
         <activity android:name=".activity.RegisterActivity" />
+        <activity android:name=".activity.AlbumActivity" />
+        <activity android:name=".activity.PlayBackActivity" />
     </application>
 
 </manifest>
