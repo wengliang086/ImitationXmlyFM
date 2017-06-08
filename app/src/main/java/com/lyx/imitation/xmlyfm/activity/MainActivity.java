@@ -1,5 +1,6 @@
 package com.lyx.imitation.xmlyfm.activity;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -35,7 +36,26 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         fragmentManager = getSupportFragmentManager();
         RadioGroup radioGroup = (RadioGroup) findViewById(R.id.id_main_rg);
         radioGroup.setOnCheckedChangeListener(this);
+
+        setRadioButtonTopDrawableSize(R.id.id_main_find, R.drawable.selector_main_button_find);
+        setRadioButtonTopDrawableSize(R.id.id_main_download, R.drawable.selector_main_button_download);
+        setRadioButtonTopDrawableSize(R.id.id_main_subscribe, R.drawable.selector_main_button_subscribe);
+        setRadioButtonTopDrawableSize(R.id.id_main_mine, R.drawable.selector_main_button_mine);
+
         ((RadioButton) radioGroup.getChildAt(0)).setChecked(true);
+    }
+
+    /**
+     * 解决不能控制RadioButton图片大小的问题
+     *
+     * @param id
+     * @param drawableId
+     */
+    private void setRadioButtonTopDrawableSize(int id, int drawableId) {
+        RadioButton radioButton = (RadioButton) findViewById(id);
+        Drawable drawable = getResources().getDrawable(drawableId);
+        drawable.setBounds(0, 0, 45, 45);
+        radioButton.setCompoundDrawables(null, drawable, null, null);
     }
 
     @Override
